@@ -83,7 +83,10 @@ struct ExecBase *SysBase;
 extern struct DosLibrary *DOSBase;
 static struct fujinet_nio_device_base *directory_worker_base;
 #elif !defined(FUJINET_NIO_NATIVE_TEST)
-struct DosLibrary *DOSBase;
+/* Initialised, not tentative: a common DOSBase can be satisfied by libnix's
+ * __dosbase.o, whose auto-open sentinel (-1) nothing replaces under
+ * -nostartfiles, so the NULL check below would never open dos.library. */
+struct DosLibrary *DOSBase = NULL;
 static struct fujinet_nio_device_base *serial_worker_base;
 
 #endif
